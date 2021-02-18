@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class TextFade : MonoBehaviour
 {
+	// Text box and the background panel
 	public GameObject introPanel;
 	public Text introText;
 
+	// The introductory text for the game
 	private string[] intro = {
 		"A long time ago in a galaxy far far away,",
 		"there were 4 kingdoms in constant turmoil, always wanting to be the strongest.",
@@ -29,6 +31,12 @@ public class TextFade : MonoBehaviour
         
     }
 
+	/// <summary>
+	/// Displays the introductory text in segments,
+	/// fading in and out of each segment. After all
+	/// text is displayed, the background panel is
+	/// deactivated.
+	/// </summary>
 	IEnumerator FadeText()
 	{
 		introText.canvasRenderer.SetAlpha(0);
