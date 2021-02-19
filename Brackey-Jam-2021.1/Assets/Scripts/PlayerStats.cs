@@ -11,7 +11,7 @@ public class PlayerStats : MonoBehaviour
 	private Text playerHealth;
 	public int numAllies = 0;
 	public int health = 1;
-	private int upgradePoint = 4;
+	private int upgradePoint = 3;
 
     // Start is called before the first frame update
     void Start()

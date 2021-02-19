@@ -108,4 +108,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradedHero: {fileID: 21300000, guid: fda0922c366b55e40bfbb39480f73ff5, type: 3}
+  playerHUD: {fileID: 0}
   numAllies: 0
+  health: 1

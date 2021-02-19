@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 		levelGrid[(int)hero.transform.position.y, (int)hero.transform.position.x] = hero;
 
 		// Creates allies in random positions
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			GameObject ally = Instantiate(
 				allyPrefab,
