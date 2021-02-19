@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
 			GameManager.levelGrid[(int)position.y, (int)position.x].tag == "Ally")
 		{
 			gameObject.GetComponent<PlayerStats>().numAllies++;
+			gameObject.GetComponent<PlayerStats>().health++;
 			Destroy(GameManager.levelGrid[(int)position.y, (int)position.x]);
 		}
 

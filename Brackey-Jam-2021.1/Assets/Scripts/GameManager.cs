@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,8 +12,9 @@ public class GameManager : MonoBehaviour
 	public static int levelXBound;
 	public static int levelYBound;
 
-	// The main character prefab
+	// Things relating to the hero
 	public GameObject heroPrefab;
+	public GameObject playerHUD;
 
 	// The allies and their sprites
 	public GameObject allyPrefab;
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
 			new Vector3(Random.Range(0, levelXBound), Random.Range(0, levelYBound), -1),
 			Quaternion.identity
 			);
+		hero.GetComponent<PlayerStats>().playerHUD = playerHUD;
 		Camera.main.transform.position = new Vector3(hero.transform.position.x, hero.transform.position.y, -10);
 		Camera.main.transform.SetParent(hero.transform);
 		levelGrid[(int)hero.transform.position.y, (int)hero.transform.position.x] = hero;
