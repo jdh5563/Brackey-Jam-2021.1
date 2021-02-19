@@ -152,6 +152,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridEnd: {fileID: 1153677914}
+  heroPrefab: {fileID: 2358537204929474120, guid: 33023ba8fe01e2c4dba9e7eeed1f3880,
+    type: 3}
+  allyPrefab: {fileID: 4474583580443228100, guid: 8fe22cfb98664ac479e439a6dd5115df,
+    type: 3}
+  allySprites:
+  - {fileID: 21300000, guid: 77a83a86a2cbeed4f80ed1e290427ad7, type: 3}
+  - {fileID: 21300000, guid: 65aa5b53cb96c0c4fbe2a165ae2d7b10, type: 3}
 --- !u!4 &8124297
 Transform:
   m_ObjectHideFlags: 0
@@ -164,7 +171,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8124298
 MonoBehaviour:
@@ -1532,10 +1539,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
-  m_Father: {fileID: 2092703168}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &523771673
@@ -2613,7 +2620,7 @@ Transform:
   - {fileID: 803461813}
   - {fileID: 1153677913}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &657000087
 PrefabInstance:
@@ -8170,12 +8177,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2090914140}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2092703168 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2358537204929474102, guid: 33023ba8fe01e2c4dba9e7eeed1f3880,
-    type: 3}
-  m_PrefabInstance: {fileID: 2358537207018501110}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2106662282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8426,32 +8427,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2143473663}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2358537207018501110
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2358537204929474102, guid: 33023ba8fe01e2c4dba9e7eeed1f3880,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2358537204929474120, guid: 33023ba8fe01e2c4dba9e7eeed1f3880,
-        type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2358537204929474121, guid: 33023ba8fe01e2c4dba9e7eeed1f3880,
-        type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2358537204929474121, guid: 33023ba8fe01e2c4dba9e7eeed1f3880,
-        type: 3}
-      propertyPath: m_FlipY
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 33023ba8fe01e2c4dba9e7eeed1f3880, type: 3}
