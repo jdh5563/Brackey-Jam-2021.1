@@ -20,6 +20,11 @@ public class ChangeScene : MonoBehaviour
 		helpMenu.SetActive(!helpMenu.activeSelf);
 	}
 
+	public void CreditsMenu(GameObject creditsMenu)
+	{
+		creditsMenu.SetActive(!creditsMenu);
+	}
+
 	public void QuitGame()
 	{
 		Application.Quit();
