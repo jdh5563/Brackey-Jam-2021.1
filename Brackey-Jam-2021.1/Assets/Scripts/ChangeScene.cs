@@ -10,9 +10,14 @@ public class ChangeScene : MonoBehaviour
 		SceneManager.LoadScene(1);
 	}
 
+	public void MainMenu()
+	{
+		SceneManager.LoadScene(0);
+	}
+
 	public void HelpMenu(GameObject helpMenu)
 	{
-		helpMenu.SetActive(true);
+		helpMenu.SetActive(!helpMenu.activeSelf);
 	}
 
 	public void QuitGame()

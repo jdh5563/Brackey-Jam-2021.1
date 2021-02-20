@@ -6,16 +6,17 @@ public class PlayerMovement : MonoBehaviour
 {
 	// The players position
 	private Vector3 position;
+	private bool facingLeft = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	// Start is called before the first frame update
+	void Start()
+	{
 		position = gameObject.transform.position;
-    }
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
+	// Update is called once per frame
+	void Update()
+	{
 		// The position of the player last frame
 		Vector3 oldPosition = position;
 
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
 		// Adjusts the actual position of the character
 		gameObject.transform.position = position;
-    }
+	}
 
 	/// <summary>
 	/// Moves the player in a direction that
@@ -49,11 +50,24 @@ public class PlayerMovement : MonoBehaviour
 		{
 			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
 			position.x += 1;
+
+
+			if (facingLeft)
+			{
+				facingLeft = false;
+				gameObject.GetComponent<SpriteRenderer>().flipX = false;
+			}
 		}
 		else if (Input.GetKeyDown(KeyCode.A))
 		{
 			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
 			position.x -= 1;
+
+			if (!facingLeft)
+			{
+				facingLeft = true;
+				gameObject.GetComponent<SpriteRenderer>().flipX = true;
+			}
 		}
 	}
 
@@ -77,6 +91,18 @@ public class PlayerMovement : MonoBehaviour
 						gameObject.GetComponent<PlayerStats>().health -= GameManager.levelGrid[(int)position.y, (int)position.x].GetComponent<Enemy>().DealDamage();
 						GameManager.levelGrid[(int)position.y, (int)position.x].GetComponent<Enemy>().KnockBack((int)(position.y - oldPosition.y), (int)(position.x - oldPosition.x));
 						position = oldPosition;
+					}
+					else
+					{
+						if (GameManager.levelGrid[(int)position.y, (int)position.x].name == "Boss")
+						{
+							gameObject.GetComponent<PlayerStats>().gm.endPanel.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>().text =
+								"Congratulations! You defeated the big monster! Thank you so much for playing!";
+							gameObject.GetComponent<PlayerStats>().gm.endPanel.SetActive(true);
+						}
+
+						Destroy(GameManager.levelGrid[(int)position.y, (int)position.x]);
+						GameManager.levelGrid[(int)position.y, (int)position.x] = null;
 					}
 					break;
 

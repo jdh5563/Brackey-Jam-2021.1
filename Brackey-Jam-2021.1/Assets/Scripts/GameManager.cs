@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	// Things relating to the hero
 	public GameObject heroPrefab;
 	public GameObject playerHUD;
+	private GameObject hero;
 
 	// The allies and their sprites
 	public GameObject allyPrefab;
@@ -22,7 +23,12 @@ public class GameManager : MonoBehaviour
 
 	// The enemies and their sprites
 	public GameObject enemyPrefab;
+	public Sprite bossSprite;
 	public Sprite[] enemySprites;
+
+	public AudioClip[] backgroundTracks;
+
+	public GameObject endPanel;
 
 	// Awake is called before any Start method
 	void Awake()
@@ -36,33 +42,38 @@ public class GameManager : MonoBehaviour
 		SpawnObjects();
 
 		GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-		foreach(GameObject wall in walls)
+		foreach (GameObject wall in walls)
 		{
 			levelGrid[(int)wall.transform.position.y, (int)wall.transform.position.x] = wall;
 		}
 	}
 
-	// Start is called before the first frame update
-	private void Start()
+	public void SpawnBoss()
 	{
-
+		levelGrid[levelYBound - 2, levelXBound - 2] = Instantiate(enemyPrefab, new Vector3(levelXBound - 2, levelYBound - 1.8f, -1), Quaternion.identity);
+		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<SpriteRenderer>().sprite = bossSprite;
+		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<Enemy>().player = hero;
+		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<Enemy>().moveSpeed = 0.003f;
+		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<Enemy>().Health = 3;
+		levelGrid[levelYBound - 2, levelXBound - 2].name = "Boss";
 	}
 
-	// Update is called once per frame
-	void Update()
+	public void ChangeAudio()
 	{
-
+		gameObject.GetComponent<AudioSource>().clip = backgroundTracks[1];
+		gameObject.GetComponent<AudioSource>().Play();
 	}
 
 	private void SpawnObjects()
 	{
 		// Creates hero close to the bottom-left corner and attaches camera to them
-		GameObject hero = Instantiate(
+		hero = Instantiate(
 			heroPrefab,
 			new Vector3(1, 2, -1),
 			Quaternion.identity
 			);
 		hero.GetComponent<PlayerStats>().playerHUD = playerHUD;
+		hero.GetComponent<PlayerStats>().gm = this;
 		Camera.main.transform.position = new Vector3(hero.transform.position.x, hero.transform.position.y, -10);
 		Camera.main.transform.SetParent(hero.transform);
 		levelGrid[(int)hero.transform.position.y, (int)hero.transform.position.x] = hero;
@@ -81,9 +92,9 @@ public class GameManager : MonoBehaviour
 		levelGrid[10, 4].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
 		levelGrid[10, 4].GetComponent<Enemy>().player = hero;
 
-		levelGrid[10, 13] = Instantiate(enemyPrefab, new Vector3(13, 10, -1), Quaternion.identity);
-		levelGrid[10, 13].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
-		levelGrid[10, 13].GetComponent<Enemy>().player = hero;
+		levelGrid[16, 17] = Instantiate(enemyPrefab, new Vector3(17, 16, -1), Quaternion.identity);
+		levelGrid[16, 17].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
+		levelGrid[16, 17].GetComponent<Enemy>().player = hero;
 
 		levelGrid[5, 22] = Instantiate(enemyPrefab, new Vector3(22, 5, -1), Quaternion.identity);
 		levelGrid[5, 22].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];

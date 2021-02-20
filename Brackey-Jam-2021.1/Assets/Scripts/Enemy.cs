@@ -9,6 +9,14 @@ public class Enemy : MonoBehaviour
 	private int health = 1;
 	private Vector3 position;
 	public GameObject player;
+	public float moveSpeed = 0.005f;
+
+	public int Health
+	{
+		get { return health; }
+
+		set { health = value; }
+	}
 
 	// Start is called before the first frame update
 	void Start()
@@ -35,11 +43,11 @@ public class Enemy : MonoBehaviour
 
 		if (player.transform.position.x < position.x)
 		{
-			position.x -= 0.005f;
+			position.x -= moveSpeed;
 		}
 		else if (player.transform.position.x > position.x)
 		{
-			position.x += 0.005f;
+			position.x += moveSpeed;
 		}
 
 		// Checks if the new position is occupied
@@ -67,11 +75,11 @@ public class Enemy : MonoBehaviour
 
 		if (player.transform.position.y < position.y)
 		{
-			position.y -= 0.005f;
+			position.y -= moveSpeed;
 		}
 		else
 		{
-			position.y += 0.005f;
+			position.y += moveSpeed;
 		}
 
 		// Checks if the new position is occupied
@@ -107,14 +115,7 @@ public class Enemy : MonoBehaviour
 	{
 		health -= damage;
 
-		if (health <= 0)
-		{
-			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
-			Destroy(gameObject);
-			return false;
-		}
-
-		return true;
+		return health > 0;
 	}
 
 	/// <summary>

@@ -19,17 +19,17 @@ public class TextFade : MonoBehaviour
 		"Travel to each kingdom, find their greatest warriors, and save us all!"
 	};
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	// Start is called before the first frame update
+	void Start()
+	{
 		StartCoroutine("FadeText");
 	}
 
 	// Update is called once per frame
 	void Update()
-    {
-        
-    }
+	{
+
+	}
 
 	/// <summary>
 	/// Displays the introductory text in segments,
