@@ -16,42 +16,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		// Moves the player in a direction
-		// that corresponds to the selected
-		// input
-		if (Input.GetKeyDown(KeyCode.W) && position.y < GameManager.levelYBound - 1)
-		{
-			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
-			position.y += 1;
-		}
+		// The position of the player last frame
+		Vector3 oldPosition = position;
 
-		if (Input.GetKeyDown(KeyCode.S) && position.y > 0)
-		{
-			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
-			position.y -= 1;
-		}
-
-		if (Input.GetKeyDown(KeyCode.D) && position.x < GameManager.levelXBound - 1)
-		{
-			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
-			position.x += 1;
-		}
-
-		if (Input.GetKeyDown(KeyCode.A) && position.x  > 0)
-		{
-			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
-			position.x -= 1;
-		}
-
-		// Adds an ally to the player's stats, then destroys the ally
-		// that was at the position the player moved to
-		if (GameManager.levelGrid[(int)position.y, (int)position.x] != null &&
-			GameManager.levelGrid[(int)position.y, (int)position.x].tag == "Ally")
-		{
-			gameObject.GetComponent<PlayerStats>().numAllies++;
-			gameObject.GetComponent<PlayerStats>().health++;
-			Destroy(GameManager.levelGrid[(int)position.y, (int)position.x]);
-		}
+		DetectInput();
+		CheckCollisions(oldPosition);
 
 		// Assigns the player to their new grid position
 		GameManager.levelGrid[(int)position.y, (int)position.x] = gameObject;
@@ -59,4 +28,65 @@ public class PlayerMovement : MonoBehaviour
 		// Adjusts the actual position of the character
 		gameObject.transform.position = position;
     }
+
+	/// <summary>
+	/// Moves the player in a direction that
+	/// corresponds to the selected input
+	/// </summary>
+	private void DetectInput()
+	{
+		if (Input.GetKeyDown(KeyCode.W))
+		{
+			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
+			position.y += 1;
+		}
+		else if (Input.GetKeyDown(KeyCode.S))
+		{
+			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
+			position.y -= 1;
+		}
+		else if (Input.GetKeyDown(KeyCode.D))
+		{
+			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
+			position.x += 1;
+		}
+		else if (Input.GetKeyDown(KeyCode.A))
+		{
+			GameManager.levelGrid[(int)position.y, (int)position.x] = null;
+			position.x -= 1;
+		}
+	}
+
+	private void CheckCollisions(Vector3 oldPosition)
+	{
+		// Checks if the new position is occupied
+		if (GameManager.levelGrid[(int)position.y, (int)position.x] != null)
+		{
+			switch (GameManager.levelGrid[(int)position.y, (int)position.x].tag)
+			{
+				// If there is a wall, don't allow the player to move there
+				case "Wall":
+					position = oldPosition;
+					break;
+
+				// If there is an enemy, both will perform an attack
+				// If the enemy is still alive, don't allow the player to move to that tile
+				case "Enemy":
+					if (GameManager.levelGrid[(int)position.y, (int)position.x].GetComponent<Enemy>().TakeDamage(gameObject.GetComponent<PlayerStats>().attack))
+					{
+						gameObject.GetComponent<PlayerStats>().health -= GameManager.levelGrid[(int)position.y, (int)position.x].GetComponent<Enemy>().DealDamage();
+						GameManager.levelGrid[(int)position.y, (int)position.x].GetComponent<Enemy>().KnockBack((int)(position.y - oldPosition.y), (int)(position.x - oldPosition.x));
+						position = oldPosition;
+					}
+					break;
+
+				// If there is an ally, destroy it and increment the ally count for the player
+				case "Ally":
+					gameObject.GetComponent<PlayerStats>().numAllies++;
+					gameObject.GetComponent<PlayerStats>().health++;
+					Destroy(GameManager.levelGrid[(int)position.y, (int)position.x]);
+					break;
+			}
+		}
+	}
 }

@@ -20,6 +20,10 @@ public class GameManager : MonoBehaviour
 	public GameObject allyPrefab;
 	public Sprite[] allySprites;
 
+	// The enemies and their sprites
+	public GameObject enemyPrefab;
+	public Sprite[] enemySprites;
+
 	// Awake is called before any Start method
 	void Awake()
 	{
@@ -29,34 +33,12 @@ public class GameManager : MonoBehaviour
 		levelXBound = levelGrid.GetLength(1);
 		levelYBound = levelGrid.GetLength(0);
 
-		// Creates hero in a random position and attaches camera to them
-		GameObject hero = Instantiate(
-			heroPrefab,
-			new Vector3(Random.Range(0, levelXBound), Random.Range(0, levelYBound), -1),
-			Quaternion.identity
-			);
-		hero.GetComponent<PlayerStats>().playerHUD = playerHUD;
-		Camera.main.transform.position = new Vector3(hero.transform.position.x, hero.transform.position.y, -10);
-		Camera.main.transform.SetParent(hero.transform);
-		levelGrid[(int)hero.transform.position.y, (int)hero.transform.position.x] = hero;
+		SpawnObjects();
 
-		// Creates allies in random positions
-		for (int i = 0; i < 3; i++)
+		GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
+		foreach(GameObject wall in walls)
 		{
-			GameObject ally = Instantiate(
-				allyPrefab,
-				new Vector3(Random.Range(0, levelXBound), Random.Range(0, levelYBound), -1),
-				Quaternion.identity
-				);
-
-			ally.GetComponent<SpriteRenderer>().sprite = allySprites[Random.Range(0, allySprites.Length)];
-
-			while (levelGrid[(int)ally.transform.position.y, (int)ally.transform.position.x] != null)
-			{
-				ally.transform.position = new Vector3(Random.Range(0, levelXBound), Random.Range(0, levelYBound), -1);
-			}
-
-			levelGrid[(int)ally.transform.position.y, (int)ally.transform.position.x] = ally;
+			levelGrid[(int)wall.transform.position.y, (int)wall.transform.position.x] = wall;
 		}
 	}
 
@@ -70,5 +52,45 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 
+	}
+
+	private void SpawnObjects()
+	{
+		// Creates hero close to the bottom-left corner and attaches camera to them
+		GameObject hero = Instantiate(
+			heroPrefab,
+			new Vector3(1, 2, -1),
+			Quaternion.identity
+			);
+		hero.GetComponent<PlayerStats>().playerHUD = playerHUD;
+		Camera.main.transform.position = new Vector3(hero.transform.position.x, hero.transform.position.y, -10);
+		Camera.main.transform.SetParent(hero.transform);
+		levelGrid[(int)hero.transform.position.y, (int)hero.transform.position.x] = hero;
+
+		// Creates 3 allies around the map for the player to find
+		levelGrid[12, 25] = Instantiate(allyPrefab, new Vector3(25, 12, -1), Quaternion.identity);
+		levelGrid[12, 25].GetComponent<SpriteRenderer>().sprite = allySprites[Random.Range(0, allySprites.Length)];
+
+		levelGrid[3, 13] = Instantiate(allyPrefab, new Vector3(13, 3, -1), Quaternion.identity);
+		levelGrid[3, 13].GetComponent<SpriteRenderer>().sprite = allySprites[Random.Range(0, allySprites.Length)];
+
+		levelGrid[1, 30] = Instantiate(allyPrefab, new Vector3(30, 1, -1), Quaternion.identity);
+		levelGrid[1, 30].GetComponent<SpriteRenderer>().sprite = allySprites[Random.Range(0, allySprites.Length)];
+
+		levelGrid[10, 4] = Instantiate(enemyPrefab, new Vector3(4, 10, -1), Quaternion.identity);
+		levelGrid[10, 4].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
+		levelGrid[10, 4].GetComponent<Enemy>().player = hero;
+
+		levelGrid[10, 13] = Instantiate(enemyPrefab, new Vector3(13, 10, -1), Quaternion.identity);
+		levelGrid[10, 13].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
+		levelGrid[10, 13].GetComponent<Enemy>().player = hero;
+
+		levelGrid[5, 22] = Instantiate(enemyPrefab, new Vector3(22, 5, -1), Quaternion.identity);
+		levelGrid[5, 22].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
+		levelGrid[5, 22].GetComponent<Enemy>().player = hero;
+
+		levelGrid[16, 27] = Instantiate(enemyPrefab, new Vector3(27, 16, -1), Quaternion.identity);
+		levelGrid[16, 27].GetComponent<SpriteRenderer>().sprite = enemySprites[Random.Range(0, enemySprites.Length)];
+		levelGrid[16, 27].GetComponent<Enemy>().player = hero;
 	}
 }

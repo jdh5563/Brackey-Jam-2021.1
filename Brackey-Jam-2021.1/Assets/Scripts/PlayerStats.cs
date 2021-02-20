@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-	public Sprite upgradedHero;
+	public Sprite[] heroUpgrades;
 	public GameObject playerHUD;
 	private Text allyCount;
 	private Text playerHealth;
+	private Text playerAttack;
 	public int numAllies = 0;
 	public int health = 1;
+	public int attack = 0;
 	private int upgradePoint = 3;
 
     // Start is called before the first frame update
@@ -18,6 +20,7 @@ public class PlayerStats : MonoBehaviour
     {
 		allyCount = playerHUD.transform.GetChild(0).GetComponent<Text>();
 		playerHealth = playerHUD.transform.GetChild(1).GetComponent<Text>();
+		playerAttack = playerHUD.transform.GetChild(2).GetComponent<Text>();
 	}
 
     // Update is called once per frame
@@ -25,10 +28,19 @@ public class PlayerStats : MonoBehaviour
     {
 		allyCount.text = "Allies: " + numAllies;
 		playerHealth.text = "Health: " + health;
+		playerAttack.text = "Attack: " + attack;
+
 		// Changes the sprite of the hero once enough allies are collected
 		if(numAllies == upgradePoint)
 		{
-			gameObject.GetComponent<SpriteRenderer>().sprite = upgradedHero;
+			gameObject.GetComponent<SpriteRenderer>().sprite = heroUpgrades[1];
+			attack = 1;
+		}
+
+		// Disables the hero if they run out of health
+		if(health <= 0)
+		{
+			gameObject.SetActive(false);
 		}
     }
 }
