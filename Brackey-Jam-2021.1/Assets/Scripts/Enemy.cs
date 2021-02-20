@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
 	// Enemy stats
 	private int attack = 1;
-	private int health = 2;
+	private int health = 1;
 	private Vector3 position;
 	public GameObject player;
 
