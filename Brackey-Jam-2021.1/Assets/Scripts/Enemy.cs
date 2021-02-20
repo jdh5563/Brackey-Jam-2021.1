@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
 		Move(oldPosition);
 
 		GameManager.levelGrid[(int)position.y, (int)position.x] = gameObject;
-		gameObject.transform.position = position;
+		gameObject.transform.position = new Vector3((int)position.x, (int)position.y, (int)position.z);
 	}
 
 	private void Move(Vector3 oldPosition)
@@ -35,11 +35,11 @@ public class Enemy : MonoBehaviour
 
 		if (player.transform.position.x < position.x)
 		{
-			position.x -= 1;
+			position.x -= 0.005f;
 		}
 		else if (player.transform.position.x > position.x)
 		{
-			position.x += 1;
+			position.x += 0.005f;
 		}
 
 		// Checks if the new position is occupied
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
 			{
 				// If there is a wall, don't allow the player to move there
 				case "Wall":
-					position = oldPosition;
+					position.x = oldPosition.x;
 					break;
 
 				// If there is an enemy, both will perform an attack
@@ -60,22 +60,18 @@ public class Enemy : MonoBehaviour
 
 				// If there is an ally, destroy it and increment the ally count for the player
 				case "Ally":
-					position = oldPosition;
+					position.x = oldPosition.x;
 					break;
 			}
-		}
-		else
-		{
-			return;
 		}
 
 		if (player.transform.position.y < position.y)
 		{
-			position.y -= 1;
+			position.y -= 0.005f;
 		}
 		else
 		{
-			position.y += 1;
+			position.y += 0.005f;
 		}
 
 		// Checks if the new position is occupied
@@ -85,7 +81,7 @@ public class Enemy : MonoBehaviour
 			{
 				// If there is a wall, don't allow the player to move there
 				case "Wall":
-					position = oldPosition;
+					position.y = oldPosition.y;
 					break;
 
 				// If there is an enemy, both will perform an attack
@@ -96,13 +92,9 @@ public class Enemy : MonoBehaviour
 
 				// If there is an ally, destroy it and increment the ally count for the player
 				case "Ally":
-					position = oldPosition;
+					position.y = oldPosition.y;
 					break;
 			}
-		}
-		else
-		{
-			return;
 		}
 	}
 
