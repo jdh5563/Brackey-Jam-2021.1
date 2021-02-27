@@ -91,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
 						gameObject.GetComponent<PlayerStats>().health -= GameManager.levelGrid[(int)position.y, (int)position.x].GetComponent<Enemy>().DealDamage();
 						GameManager.levelGrid[(int)position.y, (int)position.x].GetComponent<Enemy>().KnockBack((int)(position.y - oldPosition.y), (int)(position.x - oldPosition.x));
 						position = oldPosition;
+						gameObject.GetComponent<AudioSource>().clip = gameObject.GetComponent<PlayerStats>().playerSounds[0];
+						gameObject.GetComponent<AudioSource>().Play();
 					}
 					else
 					{
@@ -100,6 +102,9 @@ public class PlayerMovement : MonoBehaviour
 								"Congratulations! You defeated the big monster! Thank you so much for playing!";
 							gameObject.GetComponent<PlayerStats>().gm.endPanel.SetActive(true);
 						}
+
+						gameObject.GetComponent<AudioSource>().clip = gameObject.GetComponent<PlayerStats>().playerSounds[1];
+						gameObject.GetComponent<AudioSource>().Play();
 
 						Destroy(GameManager.levelGrid[(int)position.y, (int)position.x]);
 						GameManager.levelGrid[(int)position.y, (int)position.x] = null;

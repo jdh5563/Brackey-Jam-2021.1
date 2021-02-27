@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 	private int health = 1;
 	private Vector3 position;
 	public GameObject player;
-	public float moveSpeed = 0.005f;
+	public float moveSpeed = 1f;
 
 	public int Health
 	{
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
 	{
 		Vector3 oldPosition = position;
 

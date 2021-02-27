@@ -22,7 +22,7 @@ public class ChangeScene : MonoBehaviour
 
 	public void CreditsMenu(GameObject creditsMenu)
 	{
-		creditsMenu.SetActive(!creditsMenu);
+		creditsMenu.SetActive(!creditsMenu.activeSelf);
 	}
 
 	public void QuitGame()

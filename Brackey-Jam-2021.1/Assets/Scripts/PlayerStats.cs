@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour
 {
 	public Sprite[] heroUpgrades;
+	public AudioClip[] playerSounds;
 	public GameObject playerHUD;
 	private Text allyCount;
 	private Text playerHealth;
@@ -39,12 +40,14 @@ public class PlayerStats : MonoBehaviour
 			upgradePoint += 1;
 			gameObject.GetComponent<SpriteRenderer>().sprite = heroUpgrades[1];
 			attack += 1;
+			gameObject.GetComponent<AudioSource>().clip = playerSounds[2];
+			gameObject.GetComponent<AudioSource>().Play();
 			gm.SpawnBoss();
 			gm.ChangeAudio();
 		}
 
 		// Disables the hero if they run out of health
-		if (health <= 0)
+		if (health == 0)
 		{
 			gm.endPanel.transform.GetChild(0).GetComponent<Text>().text =
 	"Oh no! Unfortunately you couldn't take down the bug monster this time. Feel free to try again! Thank you so much for playing!";

@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 		levelGrid[levelYBound - 2, levelXBound - 2] = Instantiate(enemyPrefab, new Vector3(levelXBound - 2, levelYBound - 1.8f, -1), Quaternion.identity);
 		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<SpriteRenderer>().sprite = bossSprite;
 		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<Enemy>().player = hero;
-		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<Enemy>().moveSpeed = 0.003f;
+		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<Enemy>().moveSpeed = .5f;
 		levelGrid[levelYBound - 2, levelXBound - 2].GetComponent<Enemy>().Health = 3;
 		levelGrid[levelYBound - 2, levelXBound - 2].name = "Boss";
 	}
